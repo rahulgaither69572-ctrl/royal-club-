@@ -1,0 +1,21 @@
+{
+  "name": "royal-gaming-platform",
+  "version": "1.0.0",
+  "description": "Royal Gaming Club - Rummy, 3 Patti, Dragon vs Tiger, Andar Bahar & Color Prediction",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "gaming",
+    "casino",
+    "teen-patti",
+    "rummy",
+    "dragon-tiger",
+    "andar-bahar",
+    "color-prediction"
+  ],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Royal Gaming Club - Rummy, 3 Patti, Dragon Tiger & Color Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-wrap" onclick="switchView('dashboard')">
+                <span class="brand-logo-icon">👑</span>
+                <span class="brand-name">ROYAL CLUB</span>
+                <span class="brand-badge">VIP</span>
+            </div>
+
+            <div class="header-actions">
+                <div class="user-profile-badge">
+                    <div class="user-avatar">P</div>
+                    <span class="username" id="header-username">VIP_Player</span>
+                </div>
+
+                <div class="wallet-badge" id="user-balance-wrap" onclick="openModal('modal-deposit')">
+                    <span class="wallet-icon">🪙</span>
+                    <span class="wallet-balance" id="user-wallet-balance">₹10,000</span>
+                </div>
+
+                <button class="btn-add-chips" onclick="openModal('modal-deposit')">+ Add Chips</button>
+                <button class="btn-icon" id="btn-sound-toggle" title="Toggle Sound">🔊</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- LIVE WINNERS TICKER -->
+    <div class="live-ticker">
+        <span class="ticker-icon">⚡</span>
+        <div class="ticker-marquee" id="live-ticker-text">
+            🔥 User 98***43 just won ₹28,000 in Dragon vs Tiger! | 🏆 Mega Jackpot pool: ₹12,48,900 | ⚡ 100% Instant Play
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <main class="main-content">
+
+        <!-- ================= VIEW 1: DASHBOARD ================= -->
+        <div id="view-dashboard" class="view-screen active-view">
+            <!-- Promotional Carousel / Banner -->
+            <div class="promo-banner">
+                <div class="promo-text">
+                    <h2>🎉 Welcome Bonus 10,000 Chips!</h2>
+                    <p>Play 3 Patti, Rummy, Dragon vs Tiger, Andar Bahar & Color Prediction live!</p>
+                    <button class="btn-promo-action" onclick="openModal('modal-spin')">🎡 Spin & Win Today</button>
+                </div>
+                <div class="promo-graphic">🎰</div>
+            </div>
+
+            <!-- Categories Filter -->
+            <div class="category-filter">
+                <button class="cat-pill active" onclick="filterGames('all', event)">✨ All Games</button>
+                <button class="cat-pill" onclick="filterGames('card', event)">🃏 Card Games (Rummy/3 Patti)</button>
+                <button class="cat-pill" onclick="filterGames('fast', event)">⚡ Fast Games (Dragon Tiger/Color)</button>
+                <button class="cat-pill" onclick="filterGames('table', event)">🎲 Table Casino</button>
+            </div>
+
+            <!-- Games Grid -->
+            <div class="games-grid">
+                
+                <!-- Game 1: Dragon vs Tiger -->
+                <div class="game-card" data-category="fast table" onclick="switchView('game-dragon-tiger')">
+                    <div class="game-card-banner banner-dt">
+                        <span class="game-badge hot">🔥 HOT</span>
+                        <div class="game-card-icon">🐉 vs 🐅</div>
+                    </div>
+                    <div class="game-card-body">
+                        <div>
+                            <h3 class="game-title">Dragon vs Tiger</h3>
+                            <p class="game-desc">Fast 12s card duel. High card wins with 2x payout!</p>
+                        </div>
+                        <div class="game-footer-meta">
+                            <span class="active-players">1,482 Playing</span>
+                            <button class="btn-play-game">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2: Color Prediction -->
+                <div class="game-card" data-category="fast" onclick="switchView('game-color')">
+                    <div class="game-card-banner banner-color">
+                        <span class="game-badge">30s TIMER</span>
+                        <div class="game-card-icon">🔴 🟢 🟣</div>
+                    </div>
+                    <div class="game-card-body">
+                        <div>
+                            <h3 class="game-title">Red Green Violet</h3>
+                            <p class="game-desc">Win up to 9x! Predict Red, Green, Violet or 0-9 Numbers.</p>
+                        </div>
+                        <div class="game-footer-meta">
+                            <span class="active-players">3,240 Playing</span>
+                            <button class="btn-play-game">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3: Andar Bahar -->
+                <div class="game-card" data-category="card table" onclick="switchView('game-andar-bahar')">
+                    <div class="game-card-banner banner-ab">
+                        <span class="game-badge">CLASSIC</span>
+                        <div class="game-card-icon">🎴</div>
+                    </div>
+                    <div class="game-card-body">
+                        <div>
+                            <h3 class="game-title">Andar Bahar</h3>
+                            <p class="game-desc">Match the Joker card! Fast dealt cards on inside & outside.</p>
+                        </div>
+                        <div class="game-footer-meta">
+                            <span class="active-players">985 Playing</span>
+                            <button class="btn-play-game">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 4: Teen Patti (3 Patti) -->
+                <div class="game-card" data-category="card" onclick="switchView('game-teen-patti')">
+                    <div class="game-card-banner banner-tp">
+                        <span class="game-badge hot">POPULAR</span>
+                        <div class="game-card-icon">🃏</div>
+                    </div>
+                    <div class="game-card-body">
+                        <div>
+                            <h3 class="game-title">3 Patti (Teen Patti)</h3>
+                            <p class="game-desc">Play Blind, Chaal & Show with Trio, Pure Sequence & Color!</p>
+                        </div>
+                        <div class="game-footer-meta">
+                            <span class="active-players">2,810 Playing</span>
+                            <button class="btn-play-game">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 5: Rummy -->
+                <div class="game-card" data-category="card" onclick="switchView('game-rummy')">
+                    <div class="game-card-banner banner-rummy">
+                        <span class="game-badge">13 CARDS</span>
+                        <div class="game-card-icon">🂠</div>
+                    </div>
+                    <div class="game-card-body">
+                        <div>
+                            <h3 class="game-title">Indian Rummy</h3>
+                            <p class="game-desc">13-Card Points Rummy. Form Pure Sequence, Sets and Declare!</p>
+                        </div>
+                        <div class="game-footer-meta">
+                            <span class="active-players">1,940 Playing</span>
+                            <button class="btn-play-game">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= VIEW 2: DRAGON VS TIGER ================= -->
+        <div id="view-game-dragon-tiger" class="view-screen">
+            <div class="game-view-header">
+                <button class="btn-back" onclick="switchView('dashboard')">← Lobby</button>
+                <div class="game-view-title">🐉 Dragon vs Tiger 🐅</div>
+                <div class="game-round-timer" id="dt-timer">12s</div>
+            </div>
+
+            <div class="dt-table-container">
+                <div class="dt-versus-display">
+                    <div class="dt-fighter-side">
+                        <span class="dt-fighter-title title-dragon">DRAGON</span>
+                        <div id="dt-card-dragon" class="game-card-view card-back">
+                            <div class="card-pattern">🐉</div>
+                        </div>
+                    </div>
+
+                    <div class="dt-vs-icon">VS</div>
+
+                    <div class="dt-fighter-side">
+                        <span class="dt-fighter-title title-tiger">TIGER</span>
+                        <div id="dt-card-tiger" class="game-card-view card-back">
+                            <div class="card-pattern">🐅</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bet Areas -->
+                <div class="dt-bet-areas-grid">
+                    <div id="dt-area-dragon" class="dt-bet-box dt-bet-dragon" onclick="window.dragonTigerGame.placeBet('dragon')">
+                        <div class="bet-label" style="color: #f43f5e;">DRAGON</div>
+                        <div class="bet-odds">1 : 1 (2x)</div>
+                        <div class="bet-amounts-info">
+                            <div id="dt-mybet-dragon" class="my-bet-amt">My: ₹0</div>
+                            <div id="dt-totalbet-dragon">Total: ₹0</div>
+                        </div>
+                    </div>
+
+                    <div id="dt-area-tie" class="dt-bet-box dt-bet-tie" onclick="window.dragonTigerGame.placeBet('tie')">
+                        <div class="bet-label" style="color: #22c55e;">TIE</div>
+                        <div class="bet-odds">1 : 8 (9x)</div>
+                        <div class="bet-amounts-info">
+                            <div id="dt-mybet-tie" class="my-bet-amt">My: ₹0</div>
+                            <div id="dt-totalbet-tie">Total: ₹0</div>
+                        </div>
+                    </div>
+
+                    <div id="dt-area-tiger" class="dt-bet-box dt-bet-tiger" onclick="window.dragonTigerGame.placeBet('tiger')">
+                        <div class="bet-label" style="color: #3b82f6;">TIGER</div>
+                        <div class="bet-odds">1 : 1 (2x)</div>
+                        <div class="bet-amounts-info">
+                            <div id="dt-mybet-tiger" class="my-bet-amt">My: ₹0</div>
+                            <div id="dt-totalbet-tiger">Total: ₹0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chip Selector -->
+                <div class="chip-selector-bar" id="dt-chips"></div>
+
+                <!-- History Road -->
+                <div class="history-bar">
+                    <span class="history-label">Road:</span>
+                    <div class="history-badges-wrap" id="dt-history"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 3: COLOR PREDICTION ================= -->
+        <div id="view-game-color" class="view-screen">
+            <div class="game-view-header">
+                <button class="btn-back" onclick="switchView('dashboard')">← Lobby</button>
+                <div class="game-view-title">🎨 Red Green Violet</div>
+                <div></div>
+            </div>
+
+            <div class="color-game-header">
+                <div class="period-info">
+                    <h3>Period Number</h3>
+                    <span id="color-period">20261122045</span>
+                </div>
+                <div class="color-countdown">
+                    <h3>Count Down</h3>
+                    <span id="color-timer">00:30</span>
+                </div>
+            </div>
+
+            <!-- Color Bet Buttons -->
+            <div class="color-action-buttons">
+                <button class="btn-color-bet btn-green" onclick="window.colorGame.placeBet('color', 'green')">
+                    <span>🟢 Green</span>
+                    <small>2x Odds</small>
+                </button>
+                <button class="btn-color-bet btn-violet" onclick="window.colorGame.placeBet('color', 'violet')">
+                    <span>🟣 Violet</span>
+                    <small>4.5x Odds</small>
+                </button>
+                <button class="btn-color-bet btn-red" onclick="window.colorGame.placeBet('color', 'red')">
+                    <span>🔴 Red</span>
+                    <small>2x Odds</small>
+                </button>
+            </div>
+
+            <!-- Numbers 0-9 Grid -->
+            <div class="numbers-grid">
+                <div class="btn-number-bet num-0" onclick="window.colorGame.placeBet('number', 0)">0 (9x)</div>
+                <div class="btn-number-bet num-1" onclick="window.colorGame.placeBet('number', 1)">1 (9x)</div>
+                <div class="btn-number-bet num-2" onclick="window.colorGame.placeBet('number', 2)">2 (9x)</div>
+                <div class="btn-number-bet num-3" onclick="window.colorGame.placeBet('number', 3)">3 (9x)</div>
+                <div class="btn-number-bet num-4" onclick="window.colorGame.placeBet('number', 4)">4 (9x)</div>
+                <div class="btn-number-bet num-5" onclick="window.colorGame.placeBet('number', 5)">5 (9x)</div>
+                <div class="btn-number-bet num-6" onclick="window.colorGame.placeBet('number', 6)">6 (9x)</div>
+                <div class="btn-number-bet num-7" onclick="window.colorGame.placeBet('number', 7)">7 (9x)</div>
+                <div class="btn-number-bet num-8" onclick="window.colorGame.placeBet('number', 8)">8 (9x)</div>
+                <div class="btn-number-bet num-9" onclick="window.colorGame.placeBet('number', 9)">9 (9x)</div>
+            </div>
+
+            <!-- Chip Selector -->
+            <div class="chip-selector-bar" id="color-chips"></div>
+
+            <!-- My Bets this round -->
+            <div style="margin-top: 16px;">
+                <h4 style="font-size: 13px; color: var(--text-muted);">Current Active Bets:</h4>
+                <div class="mybets-list" id="color-mybets-list"></div>
+            </div>
+
+            <!-- Record History Table -->
+            <div class="record-table-wrap">
+                <h4 style="margin-bottom: 12px; color: #ffd700; font-size: 14px;">Recent Game Record</h4>
+                <table class="record-table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Number</th>
+                            <th>Big/Small</th>
+                            <th>Color</th>
+                        </tr>
+                    </thead>
+                    <tbody id="color-history-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 4: ANDAR BAHAR ================= -->
+        <div id="view-game-andar-bahar" class="view-screen">
+            <div class="game-view-header">
+                <button class="btn-back" onclick="switchView('dashboard')">← Lobby</button>
+                <div class="game-view-title">🎴 Andar Bahar Live</div>
+                <div></div>
+            </div>
+
+            <div class="ab-table-container">
+                <!-- Center Opening Joker Card -->
+                <div class="ab-joker-section">
+                    <div class="ab-joker-title">Opening Joker Card</div>
+                    <div id="ab-joker-card" class="game-card-view card-front"></div>
+                </div>
+
+                <!-- Andar & Bahar Piles -->
+                <div class="ab-piles-grid">
+                    <div class="ab-side-card">
+                        <div class="ab-side-header">
+                            <span class="ab-side-title ab-title-andar">ANDAR (1.95x)</span>
+                            <span id="ab-mybet-andar" style="color: #00ff88; font-weight: bold;">₹0</span>
+                        </div>
+                        <div class="ab-cards-pile" id="ab-andar-cards"></div>
+                    </div>
+
+                    <div class="ab-side-card">
+                        <div class="ab-side-header">
+                            <span class="ab-side-title ab-title-bahar">BAHAR (2.0x)</span>
+                            <span id="ab-mybet-bahar" style="color: #00ff88; font-weight: bold;">₹0</span>
+                        </div>
+                        <div class="ab-cards-pile" id="ab-bahar-cards"></div>
+                    </div>
+                </div>
+
+                <div class="ab-status-banner" id="ab-status-text">Place your bets on ANDAR or BAHAR!</div>
+
+                <!-- Controls & Bet placement -->
+                <div class="ab-controls">
+                    <button class="btn-ab-bet btn-ab-andar" onclick="window.andarBaharGame.placeBet('andar')">Bet ANDAR</button>
+                    <button class="btn-ab-deal" id="ab-deal-btn" onclick="window.andarBaharGame.startDealing()">Deal Cards</button>
+                    <button class="btn-secondary" onclick="window.andarBaharGame.clearBets()">Clear Bets</button>
+                    <button class="btn-ab-bet btn-ab-bahar" onclick="window.andarBaharGame.placeBet('bahar')">Bet BAHAR</button>
+                </div>
+
+                <!-- Chip Selector -->
+                <div class="chip-selector-bar" id="ab-chips"></div>
+
+                <!-- History -->
+                <div class="history-bar">
+                    <span class="history-label">Trend:</span>
+                    <div class="history-badges-wrap" id="ab-history"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 5: 3 PATTI ================= -->
+        <div id="view-game-teen-patti" class="view-screen">
+            <div class="game-view-header">
+                <button class="btn-back" onclick="switchView('dashboard')">← Lobby</button>
+                <div class="game-view-title">🃏 3 Patti (Teen Patti)</div>
+                <div></div>
+            </div>
+
+            <div class="tp-table-container">
+                <!-- Pot in Center -->
+                <div class="tp-pot-display">
+                    <div class="tp-pot-label">TOTAL POT</div>
+                    <div class="tp-pot-value" id="tp-pot-amount">₹150</div>
+                </div>
+
+                <!-- Opponents Row -->
+                <div class="tp-opponents-row">
+                    <div class="tp-seat">
+                        <div class="tp-player-tag">Rohan (Bot)</div>
+                        <span id="tp-bot1-status" class="player-tag">BLIND</span>
+                        <div class="tp-cards-row" id="tp-bot1-cards"></div>
+                    </div>
+
+                    <div class="tp-seat">
+                        <div class="tp-player-tag">Vikram (Bot)</div>
+                        <span id="tp-bot2-status" class="player-tag">BLIND</span>
+                        <div class="tp-cards-row" id="tp-bot2-cards"></div>
+                    </div>
+                </div>
+
+                <!-- Player Seat -->
+                <div class="tp-seat" style="margin-top: 20px;">
+                    <div class="tp-player-tag" style="color: #ffd700;">YOU (Player)</div>
+                    <span id="tp-player-status" class="player-tag">BLIND</span>
+                    <div class="tp-cards-row" id="tp-player-cards"></div>
+                </div>
+
+                <!-- 3 Patti Action Buttons -->
+                <div class="tp-controls-bar">
+                    <button class="btn-tp-action btn-tp-see" id="tp-see-btn" onclick="window.teenPattiGame.seeCards()">👀 See Cards</button>
+                    <button class="btn-tp-action btn-tp-chaal" id="tp-chaal-btn" onclick="window.teenPattiGame.chaal()">Chaal (₹50)</button>
+                    <button class="btn-tp-action btn-tp-pack" id="tp-pack-btn" onclick="window.teenPattiGame.pack()">❌ Pack</button>
+                    <button class="btn-tp-action btn-tp-show" id="tp-show-btn" onclick="window.teenPattiGame.showdown()">🏆 Show</button>
+                    <button class="btn-tp-action btn-tp-chaal" id="tp-restart-btn" style="display:none;" onclick="window.teenPattiGame.startNewTable()">🔄 Next Hand</button>
+                </div>
+
+                <!-- Boot Chip Selector -->
+                <div style="text-align: center; margin-top: 14px; font-size: 12px; color: var(--text-muted); font-weight: 600;">Boot Chip Amount:</div>
+                <div class="chip-selector-bar" id="tp-chips" style="margin-top: 8px;"></div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 6: RUMMY ================= -->
+        <div id="view-game-rummy" class="view-screen">
+            <div class="game-view-header">
+                <button class="btn-back" onclick="switchView('dashboard')">← Lobby</button>
+                <div class="game-view-title">🂠 13 Card Indian Rummy</div>
+                <div></div>
+            </div>
+
+            <div class="rummy-table-container">
+                <!-- Center Decks -->
+                <div class="rummy-decks-row">
+                    <div class="rummy-deck-slot" onclick="window.rummyGame.pickFromClosed()">
+                        <div class="game-card-view card-back" style="width: 50px; height: 70px;">
+                            <div class="card-pattern" style="font-size: 18px;">🎴</div>
+                        </div>
+                        <span class="deck-slot-title">Closed Deck</span>
+                        <small id="rummy-closed-count" style="color: #aaa; font-size: 10px;">40 cards</small>
+                    </div>
+
+                    <div class="rummy-deck-slot" onclick="window.rummyGame.pickFromOpen()">
+                        <div id="rummy-open-top"></div>
+                        <span class="deck-slot-title">Open / Discard</span>
+                        <small style="color: #aaa; font-size: 10px;">Click to Pick</small>
+                    </div>
+
+                    <div class="rummy-deck-slot">
+                        <div id="rummy-joker-card"></div>
+                        <span class="deck-slot-title" style="color: #ffd700;">Wild Joker</span>
+                    </div>
+                </div>
+
+                <div class="ab-status-banner" id="rummy-status-text">Your Turn: Pick 1 card from Open Deck or Closed Deck.</div>
+
+                <!-- Player Hand Cards -->
+                <div class="rummy-hand-area">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 12px; font-weight: 700; color: #ffd700;">Your Cards (13 Cards):</span>
+                        <button class="btn-back" style="padding: 4px 10px; font-size: 11px;" onclick="window.rummyGame.sortPlayerCards(); window.rummyGame.renderTable();">⚡ Auto Sort</button>
+                    </div>
+                    <div class="rummy-cards-tray" id="rummy-player-cards"></div>
+                </div>
+
+                <!-- Rummy Controls -->
+                <div class="rummy-controls-bar">
+                    <button class="btn-tp-action btn-tp-pack" onclick="window.rummyGame.discardCard()">Discard Selected Card</button>
+                    <button class="btn-tp-action btn-tp-show" onclick="window.rummyGame.declareShow()">🏆 Declare / Show</button>
+                    <button class="btn-tp-action btn-tp-chaal" onclick="window.rummyGame.startNewGame()">🔄 New Game</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- Modal 1: Add Free Demo Chips -->
+    <div class="app-modal-overlay" id="modal-deposit">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('modal-deposit')">✕</button>
+            <h3 class="modal-title">🪙 Add Demo Chips</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Instant free chips to test and play all games!</p>
+
+            <div class="deposit-options-grid">
+                <div class="deposit-option-btn" onclick="addDemoCash(1000)">
+                    <div class="opt-amt">+ ₹1,000</div>
+                    <div class="opt-tag">Starter Pack</div>
+                </div>
+                <div class="deposit-option-btn" onclick="addDemoCash(5000)">
+                    <div class="opt-amt">+ ₹5,000</div>
+                    <div class="opt-tag">Popular</div>
+                </div>
+                <div class="deposit-option-btn" onclick="addDemoCash(10000)">
+                    <div class="opt-amt">+ ₹10,000</div>
+                    <div class="opt-tag">VIP Pack</div>
+                </div>
+                <div class="deposit-option-btn" onclick="addDemoCash(50000)">
+                    <div class="opt-amt">+ ₹50,000</div>
+                    <div class="opt-tag">High Roller</div>
+                </div>
+            </div>
+
+            <button class="btn-promo-action" style="width: 100%;" onclick="addDemoCash(25000)">Claim VIP Bonus (+₹25,000)</button>
+        </div>
+    </div>
+
+    <!-- Modal 2: Daily Spin Wheel -->
+    <div class="app-modal-overlay" id="modal-spin">
+        <div class="modal-card" style="text-align: center;">
+            <button class="modal-close-btn" onclick="closeModal('modal-spin')">✕</button>
+            <h3 class="modal-title">🎡 Daily Lucky Spin</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">Spin every day to win up to ₹10,000 free chips!</p>
+
+            <div class="spin-wheel-container">
+                <div class="wheel-frame">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel-disc" id="spin-disc"></div>
+                </div>
+                <button class="btn-spin-now" onclick="spinWheel()">SPIN NOW</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Color Round Result Modal -->
+    <div class="app-modal-overlay" id="color-result-modal">
+        <div class="modal-card" style="text-align: center;">
+            <h3 style="font-size: 18px; color: #ffd700; margin-bottom: 12px;">Result Announced!</h3>
+            <div style="font-size: 48px; font-weight: 900; color: #fff; margin-bottom: 8px;" id="crm-number">7</div>
+            <div id="crm-colors" style="margin-bottom: 14px;"></div>
+            <div id="crm-payout"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- SCRIPTS -->
+    <script src="sound.js"></script>
+    <script src="games/dragonTiger.js"></script>
+    <script src="games/colorGame.js"></script>
+    <script src="games/andarBahar.js"></script>
+    <script src="games/teenPatti.js"></script>
+    <script src="games/rummy.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
