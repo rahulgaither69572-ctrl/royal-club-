@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = process.env.PORT || 3000;
+const ROOT_DIR = path.join(__dirname, '..');
+
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -13,9 +15,9 @@ const MIME_TYPES = {
     '.svg': 'image/svg+xml'
 };
 
-const requestHandler = (req, res) => {
+const server = http.createServer((req, res) => {
     let safeUrl = req.url.split('?')[0];
-    let filePath = path.join(__dirname, safeUrl === '/' ? 'index.html' : safeUrl);
+    let filePath = path.join(ROOT_DIR, safeUrl === '/' ? 'index.html' : safeUrl);
     let ext = path.extname(filePath).toLowerCase();
     let contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
@@ -33,15 +35,9 @@ const requestHandler = (req, res) => {
             res.end(content);
         }
     });
-};
+});
 
-const server = http.createServer(requestHandler);
-
-if (require.main === module) {
-    server.listen(PORT, () => {
-        console.log(`🚀 Royal Gaming Platform Server running at http://localhost:${PORT}`);
-        console.log(`Open your browser and navigate to http://localhost:${PORT}`);
-    });
-}
-
-module.exports = requestHandler;
+server.listen(PORT, () => {
+    console.log(`🚀 Royal Gaming Platform Server running at http://localhost:${PORT}`);
+    console.log(`Open your browser and navigate to http://localhost:${PORT}`);
+});
